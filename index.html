@@ -92,11 +92,16 @@
   }
   .btn-hero-2 p { font-family: var(--sans); font-weight: 500; font-size: 16px; line-height: 20px; letter-spacing: -0.1504px; color: #9c4b23; text-align: center; white-space: nowrap; }
 
-  .trust { display: flex; gap: 28px; align-items: center; flex: none; }
+  .trust { display: flex; gap: 18px; align-items: center; flex: none; }
   .avatars { display: flex; align-items: center; flex: none; }
-  .avatars > div { width: 48px; height: 48px; flex: none; position: relative; }
-  .avatars > div:not(:last-child) { margin-right: -13px; }
-  .avatars img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  /* the same monogram the case study gives her further down the page, so the
+     person quoted here and the person quoted there read as one person */
+  .avatars .mono {
+    width: 54px; height: 54px; flex: none; display: flex; align-items: center; justify-content: center;
+    overflow: hidden; border-radius: 999px;
+    background-image: linear-gradient(135deg, rgb(232,121,47) 0%, rgb(180,86,42) 71.429%);
+  }
+  .avatars .mono p { font-family: var(--sans); font-weight: 700; font-size: 17px; line-height: normal; color: #fff; }
   .trust-r { display: flex; flex-direction: column; gap: 7px; align-items: flex-start; width: 424px; flex: none; }
   .trust-r .stars { width: 144px; height: 24px; position: relative; }
   .trust-r .stars img { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -104,6 +109,7 @@
   /* one named customer says it, rather than the page claiming it */
   .trust-r .quote { font-size: 16px; font-weight: 500; line-height: 1.45; color: #fff; }
   .trust-r .who { font-size: 13px; line-height: 1.35; color: rgba(255,255,255,0.6); }
+  .trust-r .who .nm { font-weight: 600; color: rgba(255,255,255,0.78); }
 
   /* ---------------- floating product cards ---------------- */
   .fcard { position: absolute; background: #fff; overflow: hidden; display: flex; flex-direction: column; align-items: flex-start; }
@@ -998,14 +1004,18 @@
   .mob .cta-row > div, .mob .cta-row > div > div { display: block !important; width: 100%; }
   .mob .btn-hero, .mob .btn-hero-2 { width: 100%; height: auto; min-height: 52px; padding: 13px 18px; }
   .mob .btn-hero p, .mob .btn-hero-2 p { white-space: normal; font-size: 15px; line-height: 1.25; }
-  .mob .trust { flex-direction: column; align-items: flex-start; gap: 14px; width: 100%; }
-  .mob .avatars > div { width: 38px; height: 38px; }
-  .mob .avatars > div:not(:last-child) { margin-right: -11px; }
-  .mob .trust-r { width: 100%; flex: none; gap: 7px; }
+  .mob .trust { gap: 13px; align-items: center; width: 100%; }
+  .mob .avatars .mono { width: 46px; height: 46px; }
+  .mob .avatars .mono p { font-size: 15px; }
+  .mob .trust-r { width: auto; flex: 1 0 0; min-width: 1px; gap: 6px; }
   .mob .trust-r .stars { width: 114px; height: 19px; }
   .mob .trust-r p { font-size: 12.5px; line-height: 1.35; }
   .mob .trust-r .quote { font-size: 15.5px; line-height: 1.45; }
-  .mob .trust-r .who { font-size: 12.5px; line-height: 1.35; }
+  .mob .trust-r .who { font-size: 12.5px; line-height: 1.4; }
+  /* a phone has no room for name and title on one line, so break where it reads
+     rather than wherever the text happens to run out */
+  .mob .trust-r .who .sep { display: none; }
+  .mob .trust-r .who .rl { display: block; }
 
   /* ---- problem: the diagram moves under the text ---- */
   .mob .problem { height: auto; padding: 54px 20px 58px; }
@@ -1308,16 +1318,12 @@
 
       <div class="trust">
         <div class="avatars">
-          <div><img src="assets/av1.png" alt=""></div>
-          <div><img src="assets/av2.png" alt=""></div>
-          <div><img src="assets/av3.png" alt=""></div>
-          <div><img src="assets/av4.png" alt=""></div>
-          <div><img src="assets/av5.png" alt=""></div>
+          <span class="mono" aria-hidden="true"><p>PN</p></span>
         </div>
         <div class="trust-r">
           <div class="stars"><img src="assets/stars.svg" alt="5 out of 5"></div>
           <p class="quote">&ldquo;We stopped chasing updates. My team got its mornings back.&rdquo;</p>
-          <p class="who">Priya Nair &middot; VP of Operations, Meridian Distribution</p>
+          <p class="who"><span class="nm">Priya Nair</span><span class="sep"> &middot; </span><span class="rl">VP of Operations, Meridian Distribution</span></p>
         </div>
       </div>
     </div>
