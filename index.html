@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+
 <title>Freight130 Landing</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,7 +54,9 @@
 
   /* ================= Hero (14006:1235) ================= */
   .hero {
-    height: 745px; overflow: hidden;
+    /* the comp draws this at 745; the extra height is breathing room, split
+       evenly above and below, with the card cluster carried down with it */
+    height: 800px; overflow: hidden;
     background-image: linear-gradient(68.3147595514834deg, rgb(30, 37, 52) 42.154%, rgb(63, 49, 50) 96.084%);
   }
   .hero-grid-a { position: absolute; left: 572px; top: 0; width: 2351px; height: 941px; }
@@ -66,13 +69,13 @@
 
   .copy {
     position: absolute; left: 64px; top: calc(50% + 0.5px); transform: translateY(-50%);
-    width: 694px; display: flex; flex-direction: column; gap: 48px; align-items: flex-start; overflow: hidden;
+    width: 694px; display: flex; flex-direction: column; gap: 54px; align-items: flex-start; overflow: hidden;
   }
   .copy h1 {
     margin: 0; font-family: var(--serif); font-weight: 400; font-size: 74px; line-height: 1.05;
     letter-spacing: -1.48px; color: #fff; width: 100%;
   }
-  .copy .lede { font-family: var(--sans); font-weight: 400; font-size: 24px; line-height: 1.55; color: #fff; width: 100%; }
+  .copy .lede { font-family: var(--sans); font-weight: 400; font-size: 18px; line-height: 1.6; color: #fff; width: 100%; }
 
   .cta-row { display: flex; gap: 28px; align-items: flex-start; flex: none; }
   .btn-hero {
@@ -101,6 +104,9 @@
 
   /* ---------------- floating product cards ---------------- */
   .fcard { position: absolute; background: #fff; overflow: hidden; display: flex; flex-direction: column; align-items: flex-start; }
+  /* padding does not move an absolutely positioned child, so the cards take the
+     extra height as a margin and stay optically centred with the copy */
+  .hero .fcard { margin-top: 28px; }
   .fcard .ttl { font-family: var(--sans); font-weight: 700; font-size: 16px; line-height: 1.25; letter-spacing: -0.192px; color: #0f1e35; white-space: nowrap; }
 
   /* Freight Spend (14027:18573) */
@@ -615,16 +621,10 @@
   /* ================= AI (14027:19992) ================= */
   .ai {
     height: 675px; display: flex; gap: 88px; align-items: center; padding: 48px 100px;
-    overflow: hidden;
     /* the same sky as the hero, so the two dark sections read as one place */
     background-image: linear-gradient(68.3147595514834deg, rgb(30, 37, 52) 42.154%, rgb(63, 49, 50) 96.084%);
     background-color: #1e2534;
   }
-  /* and the hero's grid behind the chat, at the hero's own offset */
-  .ai .bggrid { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; opacity: 0.5; }
-  .ai .bggrid .ga { position: absolute; left: 572px; top: -132px; width: 2351px; height: 941px; }
-  .ai .bggrid .ga img { width: 100%; height: 100%; }
-  .ai .copy2, .ai .right { position: relative; z-index: 1; }
   .ai .copy2 { flex: 1 0 0; min-width: 1px; display: flex; flex-direction: column; gap: 22px; align-items: flex-start; overflow: hidden; }
   .ai h2 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: 58px; line-height: 1.12; letter-spacing: -0.87px; color: #f5f0eb; width: 100%; }
   .ai .sub { font-family: var(--sans); font-weight: 400; font-size: 18px; line-height: 1.65; color: #bdb6af; width: 100%; }
@@ -985,9 +985,10 @@
   }
 
   /* ---- hero: the screenshots come out, the words stay ---- */
-  .mob .hero { height: auto; padding: 54px 20px 58px; }
+  .mob .hero { height: auto; padding: 66px 20px 70px; }
   .mob .hero-grid-a, .mob .hero-grid-b, .mob .hero .fcard { display: none; }
-  .mob .hero .copy { position: static; transform: none; width: 100%; gap: 28px; }
+  .mob .hero .fcard { margin-top: 0; }
+  .mob .hero .copy { position: static; transform: none; width: 100%; gap: 32px; }
   .mob .copy h1 { font-size: 40px; line-height: 1.07; letter-spacing: -0.9px; }
   .mob .copy .lede { font-size: 16.5px; line-height: 1.6; }
   .mob .cta-row { flex-direction: column; gap: 12px; width: 100%; }
@@ -1067,7 +1068,6 @@
 
   /* ---- ai ---- */
   .mob .ai { height: auto; flex-direction: column; gap: 26px; padding: 54px 20px 58px; }
-  .mob .ai .bggrid { display: none; }
   .mob .ai .copy2 { width: 100%; flex: none; gap: 18px; }
   .mob .ai h2 { font-size: 33px; letter-spacing: -0.5px; }
   .mob .ai .sub { font-size: 15.5px; }
@@ -1867,8 +1867,6 @@
 
   <!-- ===================== AI ===================== -->
   <section class="sec ai" data-node-id="14027:19992">
-    <div class="bggrid" aria-hidden="true"><div class="ga"><img src="assets/hero-grid-a.svg" alt=""></div></div>
-
     <div class="copy2">
       <h2>Ask a freight question. Get an answer from your own operation.</h2>
       <p class="sub">Ask what you spent, which carriers are performing, or which shipments need attention. Freight130 finds the answer without making you build another report.</p>
@@ -2481,8 +2479,8 @@
 </script>
 
 <!-- icons and number transitions -->
-<script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/countup.js@2.8.0/dist/countUp.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/countup.js@2.8.0/dist/countUp.umd.js" crossorigin="anonymous"></script>
 <script>
 /* Savings instrument. Every field ships with a typical value, so the payoff is already
    live before anyone touches a control, and every change is answered on screen.
@@ -2646,9 +2644,9 @@
 </script>
 
 <!-- motion: smooth scroll and the scroll-driven scenes -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" crossorigin="anonymous"></script>
 <script>
 (function () {
   'use strict';
@@ -2704,7 +2702,14 @@
 
   var RISE = { opacity: 1, y: 0, ease: 'power3.out' };
   function scene(trigger, start) {
-    return gsap.timeline({ scrollTrigger: { trigger: trigger, start: start || 'top 72%', once: true } });
+    /* No `once: true`. It makes a trigger kill itself the moment it fires, and on
+       a page that loads already scrolled down every scene above the fold fires
+       inside ScrollTrigger's own refresh pass — each kill splicing the array that
+       pass is walking, until it reads past the end of it and the rest of the
+       motion never gets built. The default toggle actions play a scene on enter
+       and never reverse it, so re-entering calls play() on a finished timeline
+       and nothing happens. Same behaviour, nothing torn down mid-iteration. */
+    return gsap.timeline({ scrollTrigger: { trigger: trigger, start: start || 'top 72%' } });
   }
 
   /* ---------- the looping product art ----------
@@ -2719,17 +2724,20 @@
     return tl.repeatDelay(rest > 0.25 ? rest : 0.25).repeat(-1).pause();
   }
 
-  /* `gate` lets a film wait for its section's own entrance to finish first */
+  /* An IntersectionObserver, not a ScrollTrigger. Building a ScrollTrigger here
+     forced a refresh of the once-only scenes above, and on a page that loads
+     already scrolled past them those have just torn themselves down, so the
+     refresh walked a half-dead trigger. An observer also costs less, and it
+     reports the starting state on its own.
+     `gate` lets a film wait for its section's own entrance to finish first. */
   function onScreen(trigger, tl, gate) {
-    function settle(active) {
-      if (active && (!gate || gate())) tl.play(); else tl.pause();
-    }
-    var st = ScrollTrigger.create({
-      trigger: trigger, start: 'top 96%', end: 'bottom 4%',
-      onToggle: function (self) { settle(self.isActive); }
-    });
-    settle(st.isActive);
-    return st;
+    var el = typeof trigger === 'string' ? document.querySelector(trigger) : trigger;
+    if (!el) return;
+    function settle(on) { if (on && (!gate || gate())) tl.play(); else tl.pause(); }
+    if (!window.IntersectionObserver) { settle(true); return; }
+    new IntersectionObserver(function (entries) {
+      settle(entries[entries.length - 1].isIntersecting);
+    }, { rootMargin: '12% 0px' }).observe(el);
   }
 
   /* one card, one film */
