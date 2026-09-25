@@ -924,6 +924,60 @@
   @media print { #vswitch { display: none; } }
 
   /* =========================================================================
+     Design options panel
+     A review tool sitting on top of the page, not part of it. It clears the
+     fixed bar rather than covering the nav's own call to action.
+     ========================================================================= */
+  #studio { position: fixed; z-index: 210; top: calc(var(--barh, 62px) + 14px); right: 16px; }
+  #studio-btn {
+    width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;
+    border: 0; border-radius: 999px; cursor: pointer; color: rgba(255,255,255,0.78);
+    background: rgba(24,28,33,0.9); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    box-shadow: 0 14px 34px -12px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.08);
+    transition: color .2s ease, background .2s ease, transform .2s ease;
+  }
+  #studio-btn svg { width: 19px; height: 19px; }
+  #studio-btn:hover { color: #fff; transform: translateY(-1px); }
+  #studio-btn:focus-visible { outline: 2px solid #e8792f; outline-offset: 3px; }
+  #studio[data-open="1"] #studio-btn { background: #fff; color: #1d2126; }
+
+  #studio-panel {
+    position: absolute; top: 52px; right: 0; width: 336px; max-width: calc(100vw - 32px);
+    background: rgba(24,28,33,0.94); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    border-radius: 18px; padding: 15px;
+    box-shadow: 0 28px 64px -22px rgba(0,0,0,0.72), inset 0 0 0 1px rgba(255,255,255,0.09);
+    transform-origin: top right; opacity: 0; visibility: hidden;
+    transform: translateY(-8px) scale(0.97);
+    transition: opacity .22s ease, transform .22s cubic-bezier(.2,.7,.3,1), visibility .22s;
+  }
+  #studio[data-open="1"] #studio-panel { opacity: 1; visibility: visible; transform: none; }
+
+  .sp-hd { font-family: var(--sans); font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(255,255,255,0.45); padding: 2px 4px 13px; }
+  .sp-lb { font-family: var(--sans); font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.92); padding: 0 4px 9px; }
+  .sp-opts { display: flex; flex-direction: column; gap: 6px; }
+  .sp-opt {
+    display: flex; gap: 11px; align-items: flex-start; width: 100%; text-align: left;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 11px 12px; cursor: pointer; font-family: var(--sans);
+    transition: background .18s ease, border-color .18s ease;
+  }
+  .sp-opt:hover { background: rgba(255,255,255,0.1); }
+  .sp-opt:focus-visible { outline: 2px solid #e8792f; outline-offset: 2px; }
+  .sp-opt[aria-pressed="true"] { background: rgba(232,121,47,0.16); border-color: rgba(232,121,47,0.55); }
+  .sp-n { width: 20px; height: 20px; flex: none; border-radius: 999px; background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.7); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .sp-opt[aria-pressed="true"] .sp-n { background: #b4562a; color: #fff; }
+  .sp-tx { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+  .sp-t { font-size: 12.8px; font-weight: 500; line-height: 1.35; color: #fff; }
+  .sp-d { font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.45); }
+  @media (prefers-reduced-motion: reduce) {
+    #studio-btn, #studio-panel, .sp-opt { transition: none; }
+  }
+  @media print { #studio { display: none; } }
+
+
+  /* =========================================================================
      MOBILE VIEW
      The same DOM, laid out for a phone. Nothing here exists in desktop view.
      ========================================================================= */
@@ -1228,6 +1282,31 @@
 <script>
 /* Which layout the visitor gets, settled before anything paints. A saved choice
    wins; otherwise the viewport decides. */
+/* The hero copy has four versions to choose between. They live here, above the
+   markup, so the chosen one is in hand before the hero is parsed. */
+window.F130_HEROES = [
+  {
+    tag: 'Current',
+    h: 'Save Time With One Freight Planning & Tracking Tool',
+    p: 'Your team spends hours requesting quotes, booking loads, chasing updates, matching invoices, and rebuilding reports. Freight130 brings that work into one system.'
+  },
+  {
+    tag: 'Into one system',
+    h: 'We Bring Your Freight Operation Into One System.',
+    p: 'From booking and tendering to tracking, invoices, and reporting, Freight130 gives your team one place to manage every shipment and make better freight decisions.'
+  },
+  {
+    tag: 'The whole operation',
+    h: 'One System to Manage Your Entire Freight Operation.',
+    p: 'Manage your shipments, collaborate with carriers, tender freight, verify invoices, and turn your transportation data into insights \u2014 all from one centralized platform.'
+  },
+  {
+    tag: 'Names the problem',
+    h: 'Stop Managing Freight Across Spreadsheets, Emails, and Disconnected Tools.',
+    p: 'Freight130 brings your shipments, carriers, rates, invoices, and freight data together in one platform\u2014giving your team the visibility and control to operate more efficiently.'
+  }
+];
+
 (function () {
   var v = null;
   try { v = localStorage.getItem('f130-view'); } catch (e) {}
@@ -1235,6 +1314,11 @@
   var d = document.documentElement;
   d.setAttribute('data-view', v);
   if (v === 'mobile') d.className += ' mob';
+
+  var h = 0;
+  try { h = parseInt(localStorage.getItem('f130-hero'), 10); } catch (e) {}
+  if (!(h > 0 && h < window.F130_HEROES.length)) h = 0;
+  d.setAttribute('data-hero', String(h));
 })();
 </script>
 
@@ -1453,6 +1537,20 @@
       </div>
     </div>
   </section>
+
+  <script>
+  /* Right here rather than at the end of the document: the hero is parsed, so the
+     words can be swapped before the browser has had a chance to paint them. */
+  window.__applyHero = function (i) {
+    var v = window.F130_HEROES[i] || window.F130_HEROES[0];
+    var h1 = document.querySelector('.hero .copy h1');
+    var p = document.querySelector('.hero .copy .lede');
+    if (h1) h1.textContent = v.h;
+    if (p) p.textContent = v.p;
+    document.documentElement.setAttribute('data-hero', String(i));
+  };
+  window.__applyHero(Number(document.documentElement.getAttribute('data-hero')) || 0);
+  </script>
 
   <!-- ===================== Problem ===================== -->
   <section class="sec problem" data-node-id="14006:1263">
@@ -2271,6 +2369,17 @@
 
 </div></div>
 
+<div id="studio">
+  <button id="studio-btn" type="button" aria-expanded="false" aria-controls="studio-panel" aria-label="Design options">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h2M10 12h10M4 18h10M18 18h2"/><circle cx="16" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="18" r="2"/></svg>
+  </button>
+  <div id="studio-panel" role="dialog" aria-label="Design options" aria-hidden="true">
+    <p class="sp-hd">Design options</p>
+    <p class="sp-lb">Hero section</p>
+    <div class="sp-opts" id="sp-opts" role="group" aria-label="Hero section"></div>
+  </div>
+</div>
+
 <div id="vswitch" role="group" aria-label="Choose a layout">
   <button type="button" data-v="desktop" aria-pressed="false">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
@@ -2301,6 +2410,7 @@
         bar.style.height = h + 'px';
         fit.style.marginTop = h + 'px';
         window.__barH = h;
+        root.style.setProperty('--barh', h + 'px');
       }
     }
 
@@ -2487,6 +2597,78 @@
 
   rail(document.querySelector('.solution .cards'));
   rail(document.querySelector('.proof .tests'));
+})();
+</script>
+
+<script>
+/* The design-options panel. Swapping hero copy is only text, so it happens live
+   rather than through the reload the layout switch needs. */
+(function () {
+  'use strict';
+  var root = document.documentElement;
+  var studio = document.getElementById('studio');
+  var btn = document.getElementById('studio-btn');
+  var opts = document.getElementById('sp-opts');
+  var panel = document.getElementById('studio-panel');
+  if (!studio || !window.F130_HEROES) return;
+
+  var at = Number(root.getAttribute('data-hero')) || 0;
+
+  window.F130_HEROES.forEach(function (v, i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'sp-opt';
+    b.setAttribute('aria-pressed', String(i === at));
+
+    var n = document.createElement('span');
+    n.className = 'sp-n';
+    n.textContent = String(i + 1);
+
+    var tx = document.createElement('span');
+    tx.className = 'sp-tx';
+    var t = document.createElement('span');
+    t.className = 'sp-t';
+    t.textContent = v.h;
+    var d = document.createElement('span');
+    d.className = 'sp-d';
+    d.textContent = v.tag;
+    tx.appendChild(t);
+    tx.appendChild(d);
+
+    b.appendChild(n);
+    b.appendChild(tx);
+    b.addEventListener('click', function () { pick(i); });
+    opts.appendChild(b);
+  });
+
+  function pick(i) {
+    at = i;
+    try { localStorage.setItem('f130-hero', String(i)); } catch (e) {}
+    window.__applyHero(i);
+    Array.prototype.forEach.call(opts.children, function (b, k) {
+      b.setAttribute('aria-pressed', String(k === i));
+    });
+    /* the phone hero grows and shrinks with the copy, so everything below it moves */
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+  }
+
+  function open(on) {
+    studio.setAttribute('data-open', on ? '1' : '0');
+    btn.setAttribute('aria-expanded', String(on));
+    panel.setAttribute('aria-hidden', String(!on));
+  }
+
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    open(studio.getAttribute('data-open') !== '1');
+  });
+  document.addEventListener('click', function (e) {
+    if (studio.getAttribute('data-open') === '1' && !studio.contains(e.target)) open(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') open(false);
+  });
+  open(false);
 })();
 </script>
 
