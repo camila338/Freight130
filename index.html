@@ -560,64 +560,36 @@
 
 
 
-  /* ---- the report request, kept after the estimate ---- */
+  /* ---- the report request ----
+     A plain centred modal over the screen, above the layout switch and the
+     design-options button (z 200 / 210). */
   #crep[hidden] { display: none; }
-  #crep { position: fixed; inset: 0; z-index: 80; display: flex; align-items: center; justify-content: center; padding: 24px; }
-  #crep .veil { position: absolute; inset: 0; background: rgba(29,33,38,0.58); }
-  #crep .box { position: relative; z-index: 1; width: 520px; max-width: 100%; max-height: 100%; overflow: auto;
-    background: #fff; border-radius: 26px; box-shadow: 0 50px 90px -30px rgba(29,33,38,0.65); }
-  #crep .x { position: absolute; right: 16px; top: 16px; z-index: 2; width: 32px; height: 32px; border-radius: 999px;
-    background: rgba(255,255,255,0.14); border: 0; cursor: pointer; color: #fff; display: flex; align-items: center; justify-content: center; }
-  #crep .x svg { width: 15px; height: 15px; }
-  #crep .x:hover { background: rgba(255,255,255,0.26); }
-
-  /* the estimate leads, so the ask arrives with its reason attached */
-  #crep .rhead { padding: 26px 30px 22px; color: #fff;
-    background-image: linear-gradient(153deg, #b4562a 0%, #7d3714 100%); }
-  #crep .rhead .k { font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
-    text-transform: uppercase; color: rgba(255,255,255,0.65); }
-  #crep .rhead .big { font-family: var(--sans); font-size: 40px; font-weight: 700; line-height: 1.05;
-    letter-spacing: -1.5px; margin-top: 8px; font-variant-numeric: tabular-nums; }
-  #crep .rhead .big em { font-style: normal; font-size: 18px; font-weight: 600; letter-spacing: -0.2px; color: rgba(255,255,255,0.75); }
-  #crep .rhead .s { font-family: var(--sans); font-size: 13.5px; color: rgba(255,255,255,0.8); margin-top: 7px; font-variant-numeric: tabular-nums; }
-
-  #crep .rbody { padding: 24px 30px 26px; }
-  #crep h3 { margin: 0 0 6px; font-family: var(--serif); font-weight: 400; font-size: 32px; line-height: 1.1;
-    letter-spacing: -0.4px; color: #1d2126; }
-  #crep .lead { font-family: var(--sans); font-size: 14px; line-height: 1.55; color: #5f6575; margin-bottom: 18px; }
-  #crep .rf { margin-bottom: 14px; }
-  #crep .rpair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  #crep label { display: block; margin-bottom: 7px; font-family: var(--sans); font-size: 13px; font-weight: 500; color: #4a4438; }
-  #crep label span { color: #a49a8c; font-weight: 400; }
-  #crep input[type="text"], #crep input[type="email"], #crep input[type="tel"], #crep input[type="file"] {
-    width: 100%; height: 48px; padding: 0 15px; border: 1.5px solid #e4e4e9; border-radius: 12px; background: #fff;
-    font-family: var(--sans); font-size: 15px; color: #1d2126; outline: none; transition: border-color .12s ease, box-shadow .12s ease;
+  #crep { position: fixed; inset: 0; z-index: 300; display: flex; align-items: center; justify-content: center; padding: 16px; }
+  #crep .veil { position: absolute; inset: 0; background: rgba(29,33,38,0.55); }
+  #crep .box {
+    position: relative; width: 420px; max-width: 100%; background: #fff; border-radius: 22px;
+    padding: 28px 28px 24px; box-shadow: 0 40px 80px -30px rgba(29,33,38,0.6);
   }
-  #crep input[type="file"] { padding: 12px 13px; height: auto; font-size: 12.5px; }
+  #crep .x { position: absolute; right: 14px; top: 14px; width: 32px; height: 32px; border-radius: 999px;
+    background: #f4f0ea; border: 0; cursor: pointer; color: #6f6656; display: flex; align-items: center; justify-content: center; }
+  #crep .x svg { width: 15px; height: 15px; }
+  #crep .x:hover { background: #ece5dc; color: #1d2126; }
+  #crep h3 { margin: 0 0 18px; padding-right: 36px; font-family: var(--serif); font-weight: 400; font-size: 30px;
+    line-height: 1.1; letter-spacing: -0.4px; color: #1d2126; }
+  #crep label { display: block; margin-bottom: 7px; font-family: var(--sans); font-size: 13px; font-weight: 500; color: #4a4438; }
+  #crep input[type="email"] {
+    width: 100%; height: 52px; padding: 0 15px; border: 1.5px solid #e4e4e9; border-radius: 12px; background: #fff;
+    font-family: var(--sans); font-size: 16px; color: #1d2126; outline: none; transition: border-color .12s ease, box-shadow .12s ease;
+  }
   #crep input::placeholder { color: #b5ada0; }
   #crep input:focus { border-color: #b4562a; box-shadow: 0 0 0 3px rgba(180,86,42,0.10); }
-  #crep .rf.lead-in input { height: 54px; font-size: 16.5px; font-weight: 500; }
   #crep .rf.bad input { border-color: #d9584a; }
   #crep .rf.bad input:focus { box-shadow: 0 0 0 3px rgba(217,88,74,0.12); }
   #crep .rf .e { display: none; margin-top: 6px; font-family: var(--sans); font-size: 12px; color: #b3261e; }
   #crep .rf.bad .e { display: block; }
-
-  /* the optional extras stay folded away until they are wanted */
-  #crep .rmore { background: none; border: 0; padding: 0; margin: 2px 0 4px; cursor: pointer; display: flex; gap: 7px;
-    align-items: center; font-family: var(--sans); font-size: 13px; font-weight: 600; color: #b4562a; }
-  #crep .rmore .car { width: 7px; height: 7px; flex: none; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
-    transform: rotate(45deg) translate(-2px, -2px); transition: transform .22s ease; }
-  #crep .rmore[aria-expanded="true"] .car { transform: rotate(-135deg) translate(-2px, -2px); }
-  #crep .rmoreBd { overflow: hidden; height: 0; transition: height .28s ease; }
-  #crep .rmoreBd[data-open="1"] { height: auto; }
-  #crep .rmoreBd .pad { padding-top: 14px; }
-  @media (prefers-reduced-motion: reduce) { #crep .rmoreBd { transition: none; } }
-
-  #crep .opt { display: flex; gap: 9px; align-items: flex-start; margin: 16px 0 10px; font-family: var(--sans); font-size: 13px; color: #4a4438; }
-  #crep .opt input { margin-top: 2px; accent-color: #b4562a; }
-  #crep .why { font-family: var(--sans); font-size: 12.5px; line-height: 1.5; color: #8f8778; margin-bottom: 16px; }
-  #crep .cact.wide { width: 100%; flex: none; }
-  #crep .say { font-family: var(--sans); font-size: 13px; line-height: 1.5; margin-top: 14px; text-align: center; }
+  #crep .cact.wide { width: 100%; flex: none; margin-top: 14px; }
+  #crep .say { font-family: var(--sans); font-size: 13px; line-height: 1.5; margin-top: 12px; text-align: center; }
+  #crep .say:empty { display: none; }
   #crep .say.err { color: #b3261e; }
   #crep .say.ok { color: #17714a; }
 
@@ -1416,13 +1388,8 @@
   .mob .crefine .sl > .rv { grid-column: 2; grid-row: 1; }
   .mob .chow dl { grid-template-columns: 1fr; gap: 1px; }
   .mob .chow dd { margin-bottom: 7px; }
-  .mob #crep { padding: 14px; align-items: flex-end; }
-  .mob #crep .box { border-radius: 20px; }
-  .mob #crep .rhead { padding: 22px 20px 18px; }
-  .mob #crep .rhead .big { font-size: 34px; }
-  .mob #crep .rbody { padding: 20px 20px 22px; }
+  .mob #crep .box { padding: 24px 20px 20px; border-radius: 20px; }
   .mob #crep h3 { font-size: 27px; }
-  .mob #crep .rpair { grid-template-columns: 1fr; gap: 0; }
 
   /* ---- solution: the four cards become a rail you swipe ---- */
   .mob .solution { height: auto; padding: 54px 0 58px; gap: 20px; }
@@ -2161,78 +2128,11 @@ window.F130_HEROES = [
 
     </div>
 
+  
   </section>
 
   <!-- the report request: contact capture only once the visitor asks for it,
        and deliberately outside the calculator itself -->
-  <div id="crep" hidden>
-    <div class="veil" data-crep-close></div>
-    <div class="box" role="dialog" aria-modal="true" aria-labelledby="crepTitle">
-      <button class="x" type="button" data-crep-close aria-label="Close">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-      </button>
-
-      <!-- the estimate they are about to receive, so the ask has a reason -->
-      <div class="rhead">
-        <p class="k">Your assessment</p>
-        <p class="big"><span id="rpHrs">110.8</span> <em>hrs/mo</em></p>
-        <p class="s"><span id="rpYr">1,329.5</span> hours a year &middot; <span id="rpVal">$196,531</span> combined benefit</p>
-      </div>
-
-      <div class="rbody">
-        <h3 id="crepTitle">Where should we send it?</h3>
-        <p class="lead">The full report carries your inputs, the activity breakdown, every assumption behind the numbers and what they exclude.</p>
-
-        <form id="crepForm" autocomplete="on" novalidate>
-          <div class="rf lead-in" id="rf-email">
-            <label for="rpEmail">Work email</label>
-            <input type="email" id="rpEmail" name="email" autocomplete="email" placeholder="you@company.com">
-            <p class="e">Enter a valid work email.</p>
-          </div>
-
-          <div class="rpair">
-            <div class="rf" id="rf-name">
-              <label for="rpName">Name</label>
-              <input type="text" id="rpName" name="name" autocomplete="name">
-              <p class="e">Enter your name.</p>
-            </div>
-            <div class="rf" id="rf-company">
-              <label for="rpCompany">Company</label>
-              <input type="text" id="rpCompany" name="company" autocomplete="organization">
-              <p class="e">Enter your company.</p>
-            </div>
-          </div>
-
-          <button class="rmore" type="button" id="rpMoreBtn" aria-expanded="false" aria-controls="rpMore">
-            Add a phone number or your logo <span class="car" aria-hidden="true"></span>
-          </button>
-          <div class="rmoreBd" id="rpMore"><div class="in"><div class="pad">
-            <div class="rpair">
-              <div class="rf" id="rf-phone">
-                <label for="rpPhone">Phone <span>(optional)</span></label>
-                <input type="tel" id="rpPhone" name="phone" autocomplete="tel">
-                <p class="e"></p>
-              </div>
-              <div class="rf" id="rf-logo">
-                <label for="rpLogo">Logo <span>(PNG or JPEG, up to 2 MB)</span></label>
-                <input type="file" id="rpLogo" name="logo" accept="image/png,image/jpeg">
-                <p class="e">Use a PNG or JPEG under 2 MB, or leave it out.</p>
-              </div>
-            </div>
-          </div></div></div>
-
-          <label class="opt"><input type="checkbox" id="rpOptIn"> Send me occasional product updates from Freight130.</label>
-          <p class="why">We&rsquo;ll use your details to provide the report and follow up about Freight130.</p>
-
-          <button class="cact solid wide" type="submit" id="rpSubmit">
-            Send me the report
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
-          </button>
-          <p class="say" id="rpSay" role="status"></p>
-        </form>
-      </div>
-    </div>
-  </div>
 
   <!-- ===================== About ===================== -->
   <section class="sec about" id="about">
@@ -2855,6 +2755,31 @@ window.F130_HEROES = [
   </section>
 
 </div></div>
+
+<!-- The report request. It sits outside #canvas, next to the other fixed chrome:
+     inside the scaled canvas a fixed element resolves against the whole page
+     rather than the screen, which is how it ended up far from view. -->
+<div id="crep" hidden>
+  <div class="veil" data-crep-close></div>
+  <div class="box" role="dialog" aria-modal="true" aria-labelledby="crepTitle">
+    <button class="x" type="button" data-crep-close aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <h3 id="crepTitle">Get your report</h3>
+    <form id="crepForm" autocomplete="on" novalidate>
+      <div class="rf" id="rf-email">
+        <label for="rpEmail">Email</label>
+        <input type="email" id="rpEmail" name="email" autocomplete="email" placeholder="you@company.com">
+        <p class="e">Enter a valid email.</p>
+      </div>
+      <button class="cact solid wide" type="submit" id="rpSubmit">
+        Send me the report
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+      </button>
+      <p class="say" id="rpSay" role="status"></p>
+    </form>
+  </div>
+</div>
 
 <div id="studio">
   <button id="studio-btn" type="button" aria-expanded="false" aria-controls="studio-panel" aria-label="Design options">
@@ -3646,69 +3571,30 @@ window.F130_HEROES = [
 
   /* ----------------------------------------------------- get my report */
   var rep = $('crep');
+
   function repOpen(on) {
     rep.hidden = !on;
     if (on) {
-      /* the figures at the top are the ones on screen behind the modal */
-      $('rpHrs').textContent = hours(last.monthlyHours);
-      $('rpYr').textContent = hours(last.annualHours);
-      $('rpVal').textContent = money(last.combined);
+      $('rf-email').classList.remove('bad');
       $('rpSay').textContent = ''; $('rpSay').className = 'say';
-      openMore(false);
-      $('rpEmail').focus();
-    } else { $('cReport').focus(); }
+      $('rpEmail').focus({ preventScroll: true });
+    } else { $('cReport').focus({ preventScroll: true }); }
   }
   $('cReport').addEventListener('click', function () { if (last) repOpen(true); });
-
-  function openMore(on) {
-    slide($('rpMore'), on, function () {
-      $('rpMore').setAttribute('data-open', on ? '1' : '0');
-      $('rpMoreBtn').setAttribute('aria-expanded', String(!!on));
-    });
-  }
-  $('rpMoreBtn').addEventListener('click', function () {
-    openMore($('rpMore').getAttribute('data-open') !== '1');
-  });
   $$('#crep [data-crep-close]').forEach(function (b) { b.addEventListener('click', function () { repOpen(false); }); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !rep.hidden) repOpen(false); });
 
-  function markField(id, ok, msg) {
-    var box = $('rf-' + id);
-    box.classList.toggle('bad', !ok);
-    if (msg) box.querySelector('.e').textContent = msg;
-    return ok;
-  }
-
   $('crepForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    var name = $('rpName').value.trim(), email = $('rpEmail').value.trim(), company = $('rpCompany').value.trim();
-    var okName = markField('name', name !== '');
-    var okEmail = markField('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
-    var okCompany = markField('company', company !== '');
-
-    /* the logo never blocks the report: too large or the wrong type and it is
-       simply left out, with the reason said out loud */
-    var file = $('rpLogo').files[0] || null;
-    var okLogo = true;
-    if (file) {
-      okLogo = /^image\/(png|jpeg)$/.test(file.type) && file.size <= 2 * 1024 * 1024;
-      markField('logo', okLogo);
-      if (!okLogo) {
-        $('rpLogo').value = '';
-        openMore(true);
-      }
-    } else { markField('logo', true); }
-
-    if (!(okEmail && okName && okCompany)) {
-      var firstBad = document.querySelector('#crepForm .rf.bad input');
-      if (firstBad) firstBad.focus();
-      return;
-    }
+    var email = $('rpEmail').value.trim();
+    var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    $('rf-email').classList.toggle('bad', !ok);
+    if (!ok) { $('rpEmail').focus(); return; }
 
     var payload = Object.assign(snapshot(), {
-      contact: { name: name, email: email, company: company, phone: $('rpPhone').value.trim() || null },
-      marketingOptIn: $('rpOptIn').checked,
-      logo: okLogo ? file : null
+      contact: { name: null, email: email, company: null, phone: null },
+      marketingOptIn: false,
+      logo: null
     });
 
     var say = $('rpSay');
@@ -3720,9 +3606,9 @@ window.F130_HEROES = [
       $('rpSubmit').disabled = false;
       say.className = 'say ok';
       say.textContent = (r && r.message) || 'On its way to ' + email + '.';
-      track('report_submitted', { assessmentId: payload.assessmentId, logo: !!payload.logo });
+      track('report_submitted', { assessmentId: payload.assessmentId });
     }).catch(function (err) {
-      /* the form and everything in it stays put, so the visitor can retry */
+      /* the address stays in the field, so the visitor can simply retry */
       $('rpSubmit').disabled = false;
       say.className = 'say err';
       say.textContent = (err && err.message) || 'We could not send that. Try again.';
